@@ -66,11 +66,13 @@ class GildedTrosTest(unittest.TestCase):
         items = [
             Item('Duplicate Code', 1, 10),
             Item('Duplicate Code', 0, 10),
+            Item('Duplicate Code', 1, 1),
         ]
         gilded_tros = GildedTros(items)
         gilded_tros.update_quality()
         self.assertEqual(items[0].quality, 8)
         self.assertEqual(items[1].quality, 6)
+        self.assertEqual(items[2].quality, 0)
 
 
 if __name__ == '__main__':
