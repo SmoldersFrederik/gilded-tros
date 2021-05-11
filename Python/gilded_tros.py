@@ -7,34 +7,38 @@ class GildedTros(object):
 
     def update_quality(self):
         for item in self.items:
-            if item.name != "Good Wine" and item.name != "Backstage passes for Re:Factor" \
-                    and item.name != "Backstage passes for HAXX":
-                if item.quality > 0:
-                    if item.name != "B-DAWG Keychain":
-                        item.quality = item.quality - 1
-            else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == "Backstage passes for Re:Factor" or item.name == "Backstage passes for HAXX":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-            if item.name != "B-DAWG Keychain":
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != "Good Wine":
-                    if item.name != "Backstage passes for Re:Factor" and item.name != "Backstage passes for HAXX":
-                        if item.quality > 0:
-                            if item.name != "B-DAWG Keychain":
-                                item.quality = item.quality - 1
-                    else:
-                        item.quality = item.quality - item.quality
+            # Item is no legendary item
+            if item.quality != 80:
+                # Item are backstage passes for very interesting conferences
+                if item.name in [
+                    'Backstage passes for Re:Factor',
+                    'Backstage passes for HAXX'
+                ]:
+                    # Increase quality by 1 if sell_in > 10
+                    # Increase quality by 2 if 10 >= sell_in > 5
+                    # Increase quality by 3 if 5 >= sell_in > 0
+                    # Set quality to 0 if sell_in <= 0
+                    item.quality += 1 if item.sell_in > 10 else 2 \
+                        if item.sell_in > 5 else 3 \
+                        if item.sell_in > 0 else -item.quality
+                # Item is 'Good Wine'
+                elif item.name == 'Good Wine':
+                    # Increase quality by 1 if sell_in > 0
+                    # Increase quality by 2 if sell_in <= 0
+                    item.quality += 1 if item.sell_in > 0 else 2
+                # Other items
                 else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
+                    # Decrease quality by 1 if sell_in > 0
+                    # Decrease quality by 2 if sell_in <= 0
+                    item.quality -= 1 if item.sell_in > 0 else 2
+                # Quality cannot be larger then 50
+                if item.quality > 50:
+                    item.quality = 50
+                # Quality cannot be smaller then 0
+                elif item.quality < 0:
+                    item.quality = 0
+                # Decrease sell_in by 1
+                item.sell_in -= 1
 
 
 class Item:
