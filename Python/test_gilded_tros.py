@@ -70,7 +70,7 @@ class GildedTrosTest(unittest.TestCase):
         gilded_tros = GildedTros(items)
         gilded_tros.update_quality()
         self.assertEqual(items[0].quality, 8)
-        self.assertEqual(items[0].quality, 6)
+        self.assertEqual(items[1].quality, 6)
 
 
 if __name__ == '__main__':
