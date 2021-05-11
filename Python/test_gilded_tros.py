@@ -57,6 +57,13 @@ class GildedTrosTest(unittest.TestCase):
         gilded_tros.update_quality()
         self.assertEqual(items[0].quality, 0)
 
+    def test_smelly_items(self):
+        items = [Item('Duplicate Code', 1, 10)]
+        gilded_tros = GildedTros(items)
+        gilded_tros.update_quality()
+        self.assertEqual(items[0].quality, 8)
+        gilded_tros.update_quality()
+        self.assertEqual(items[0].quality, 4)
 
 
 if __name__ == '__main__':
