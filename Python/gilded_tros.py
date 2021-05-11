@@ -26,6 +26,15 @@ class GildedTros(object):
                     # Increase quality by 1 if sell_in > 0
                     # Increase quality by 2 if sell_in <= 0
                     item.quality += 1 if item.sell_in > 0 else 2
+                # Item is smelly item
+                elif item.name in [
+                    'Duplicate Code',
+                    'Long Methods',
+                    'Ugly Variable Names'
+                ]:
+                    # Decrease quality by 2 if sell_in > 0
+                    # Decrease quality by 4 if sell_in <= 0
+                    item.quality -= 2 if item.sell_in > 0 else 4
                 # Other items
                 else:
                     # Decrease quality by 1 if sell_in > 0
